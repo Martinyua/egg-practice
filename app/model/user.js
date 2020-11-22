@@ -1,9 +1,11 @@
 /*
  * @Author: Martin
  * @Date: 2020-11-22 14:02:23
- * @LastEditTime: 2020-11-22 14:10:26
+ * @LastEditTime: 2020-11-22 15:08:39
  * @FilePath: \egg-practice\app\model\user.js
  */
+
+const crypto = require('crypto');
 module.exports = app => {
     const { STRING, INTEGER, DATE, ENUM, TEXT } = app.Sequelize;
     // 配置（重要：一定要配置详细，一定要！！！）
@@ -34,7 +36,13 @@ module.exports = app => {
         password: {
             type: STRING(200),
             allowNull: false,
-            defaultValue: ''
+            defaultValue: '',
+            set(val) {
+                const hmac = crypto.createHash("sha256", app.config.crypto.secret);
+                hmac.update(val);
+                let hash =  hmac.digest("hex");
+                this.setDataValue('password',hash)
+            }
         },
         avatar: {
             type: STRING(200),

@@ -1,7 +1,7 @@
 /*
  * @Author: Martin
  * @Date: 2020-11-20 11:05:13
- * @LastEditTime: 2020-11-22 13:59:59
+ * @LastEditTime: 2020-11-22 16:14:52
  * @FilePath: \egg-practice\app\router.js
  */
 'use strict';
@@ -15,4 +15,6 @@ module.exports = app => {
 
   //注册
   router.post('/reg',controller.user.reg)   
+  //登录
+  router.post('/login',controller.user.login)
 };
